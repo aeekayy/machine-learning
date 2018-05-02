@@ -1,0 +1,8 @@
+CREATE DATABASE aeekay; 
+CREATE DATABASE atlas; 
+CREATE EXTENSION "uuid-ossp"; 
+CREATE EXTENSION postgis;
+CREATE EXTENSION postgis_topolog; 
+CREATE TABLE houses (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), address VARCHAR(512), city VARCHAR(256), state VARCHAR(64), zip INTEGER, geo_loc geography(POINT,4269), date_created TIMESTAMP DEFAULT NOW(), date_updated TIMESTAMP DEFAULT NOW()); 
+CREATE OR REPLACE FUNCTION update_modified_row() RETURNS TRIGGER AS $$ BEGIN NEW.date_updated = now(); RETURN NEW; END; $$ language 'plpgsql';
+CREATE TRIGGER trigger_houses_update BEFORE UPDATE ON houses FOR EACH ROW EXECUTE PROCEDURE update_modified_row();
