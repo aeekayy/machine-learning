@@ -8,3 +8,28 @@ CREATE OR REPLACE FUNCTION update_modified_row() RETURNS TRIGGER AS $$ BEGIN NEW
 CREATE TRIGGER trigger_houses_update BEFORE UPDATE ON houses FOR EACH ROW EXECUTE PROCEDURE update_modified_row();
 CREATE TABLE house_raw_data (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), house_id UUID, raw_geo_data JSON, date_created TIMESTAMP DEFAULT NOW(), date_updated TIMESTAMP DEFAULT NOW());
 CREATE TRIGGER trigger_house_raw_data_update BEFORE UPDATE ON house_raw_data FOR EACH ROW EXECUTE PROCEDURE update_modified_row();
+
+{ formattedAddress: '6591 Sonoma Ave, Fontana, CA 92336, USA',
+  latitude: 34.1338449,
+  longitude: -117.4297361,
+  extra:
+   { googlePlaceId: 'ChIJRyNdLD1Mw4ARoNDy02Jf66g',
+     confidence: 1,
+     premise: null,
+     subpremise: null,
+     neighborhood: 'Walnut Village',
+     establishment: null },
+  administrativeLevels:
+   { level2long: 'San Bernardino County',
+     level2short: 'San Bernardino County',
+     level1long: 'California',
+     level1short: 'CA' },
+  streetNumber: '6591',
+  streetName: 'Sonoma Avenue',
+  city: 'Fontana',
+  country: 'United States',
+  countryCode: 'US',
+  zipcode: '92336',
+  provider: 'google' }
+
+
